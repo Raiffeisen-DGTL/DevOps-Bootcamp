@@ -3,29 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Docker Test</title>
+    <title>Solution Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        button {
+            background-color: #2196F3;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition-duration: 0.4s;
+        }
+
+        button:hover {
+            background-color: #64B5F6;
+            color: white;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <button onclick="sendRequest()">Нажмите для выполнения теста</button>
-    <div id="result"></div>
+    <div class="container">
+        <h1>Проверка задания</h1>
+        <button onclick="sendRequest()">Нажмите для проверки теста</button>
+        <div id="result"></div>
+    </div>
 
     <script>
         async function sendRequest() {
-        const resultElement = document.getElementById("result");
+            const resultElement = document.getElementById("result");
 
-        try {
-            const response = await fetch("/process", { method: "POST" });
-            const data = await response.json();
+            try {
+                const response = await fetch("/process", { method: "POST" });
+                const data = await response.json();
 
-            if (response.ok) {
-                resultElement.innerHTML = `<p style="color: green">${data.success}</p>`;
-            } else {
-                resultElement.innerHTML = `<p style="color: red">${data.error}</p>`;
+                if (response.ok) {
+                    resultElement.innerHTML = `<p style="color: green">${data.success}</p>`;
+                } else {
+                    resultElement.innerHTML = `<p style="color: red">${data.error}</p>`;
+                }
+            } catch (error) {
+                resultElement.innerHTML = `<p style="color: red">Ошибка при выполнении запроса: ${error.message}</p>`;
             }
-        } catch (error) {
-            resultElement.innerHTML = `<p style="color: red">Ошибка при выполнении запроса: ${error.message}</p>`;
         }
-    }
-</script>
+    </script>
 </body>
 </html>
